@@ -122,6 +122,7 @@ async function analyze() {
   if (!photo) return;
   $("analyze").disabled = true;
   $("file").disabled = true;
+  $("preview-wrap").classList.add("scanning");
   const started = Date.now();
   let phase = "status.verifying";
   const render = () => t(lang, "status.elapsed", { phase: t(lang, phase), s: Math.round((Date.now() - started) / 1000) });
@@ -152,6 +153,7 @@ async function analyze() {
     setStatus(() => errorText(err), true);
   } finally {
     clearInterval(timer);
+    $("preview-wrap").classList.remove("scanning");
     $("analyze").disabled = false;
     $("file").disabled = false;
   }

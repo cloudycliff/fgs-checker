@@ -33,7 +33,9 @@
     <section id="pick" class="card">
       <label class="picker" for="file">
         <input id="file" type="file" accept="image/*">
-        <img id="preview" data-i18n-alt="pick.previewAlt" hidden>
+        <span id="preview-wrap" class="preview-wrap">
+          <img id="preview" data-i18n-alt="pick.previewAlt" hidden>
+        </span>
         <span id="pick-text" data-i18n="pick.choose"></span>
       </label>
       <button id="analyze" class="btn" data-i18n="btn.analyze" disabled></button>
