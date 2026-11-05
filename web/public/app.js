@@ -1,9 +1,11 @@
 import { ITEMS, GROUPS, colorOf } from "./fgs.js";
 import { solvePow } from "./pow.js";
 import { LANGS, t, detectLang, bandText, noticeText, adjustedText } from "./i18n.js";
+import qrcode from "./vendor/qrcode.mjs";
 
 const LONG_EDGE = 1280; // 发给模型前缩放到的长边
 const LANG_KEY = "fgs-lang"; // 手动选过的语言记在本机浏览器里
+const SITE_URL = `${location.origin}/`; // 报告图底部二维码指向的网址：用户当前访问的地址，换域名后自动跟着变
 const $ = (id) => document.getElementById(id);
 
 let photo = null; // 缩放并摆正后的照片（canvas），模型坐标和报告都基于它
@@ -233,6 +235,26 @@ function wrap(ctx, text, width) {
   return lines;
 }
 
+/** 画二维码：深色模块 + 四周留白，size 为最大边长，返回实际边长（按整像素对齐，避免模块之间出现细缝）。 */
+function drawQr(ctx, text, x, y, size) {
+  const qr = qrcode(0, "M");
+  qr.addData(text);
+  qr.make();
+  const n = qr.getModuleCount();
+  const quiet = 2;
+  const cell = Math.floor(size / (n + quiet * 2));
+  const real = cell * (n + quiet * 2);
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(x, y, real, real);
+  ctx.fillStyle = "#111827";
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      if (qr.isDark(r, c)) ctx.fillRect(x + (c + quiet) * cell, y + (r + quiet) * cell, cell, cell);
+    }
+  }
+  return real;
+}
+
 function drawLandmarks(ctx, landmarks, top, w, h) {
   const r = Math.max(9, Math.round(Math.max(w, h) * 0.0115));
   ctx.textAlign = "center";
@@ -408,6 +430,36 @@ export function renderReport(photoCanvas, result, summary) {
     ctx.fillText(line, M, y);
     y += 32;
   }
+
+  // 底部二维码：分享报告图时，别人扫码就能打开网站
+  y += 20;
+  ctx.fillStyle = C.line;
+  ctx.fillRect(M, y, W - M * 2, 2);
+  y += 28;
+  const qrSize = drawQr(ctx, SITE_URL, M, y, 220);
+  const qx = M + qrSize + 32;
+  const qw = W - M - qx;
+  let qy = y + 24;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  ctx.fillStyle = C.ink;
+  ctx.font = font(34, true);
+  ctx.fillText(t(lang, "report.qrTitle"), qx, qy);
+  qy += 56;
+  ctx.fillStyle = C.muted;
+  ctx.font = font(24);
+  for (const line of wrap(ctx, t(lang, "report.qrHint"), qw)) {
+    ctx.fillText(line, qx, qy);
+    qy += 34;
+  }
+  qy += 6;
+  ctx.fillStyle = C.accent;
+  ctx.font = font(28, true);
+  for (const line of wrap(ctx, SITE_URL.replace(/^https?:\/\//, "").replace(/\/$/, ""), qw)) {
+    ctx.fillText(line, qx, qy);
+    qy += 38;
+  }
+  y = Math.max(y + qrSize, qy) + 8;
 
   const out = document.createElement("canvas");
   out.width = W;

@@ -84,4 +84,5 @@ python scripts/fgs_test.py test_photos/ --model qwen3.8-flash --thinking off
 ## 说明
 
 - 关键点由大模型直接给出，是近似定位。专用的猫脸关键点模型（CatFLW）效果更好，但其权重为 CC BY-NC 4.0（禁止商用），本仓库没有包含。
+- 报告图底部的二维码由 [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) 2.0.4（MIT，Kazuhiko Arase）生成，文件在 `web/public/vendor/qrcode.mjs`。二维码指向用户当前访问的网址，绑定自定义域名后会自动使用新域名。
 - FGS 来源：Evangelista M. C. et al. *Facial expressions of pain in cats: the development and validation of a Feline Grimace Scale.* Scientific Reports 9, 19128 (2019).

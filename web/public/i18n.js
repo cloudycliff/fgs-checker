@@ -77,6 +77,8 @@ const zh = {
   "report.suggestions": "建议",
   "report.caveats": "照片局限",
   "report.listSep": "；",
+  "report.qrTitle": "扫码测测你家猫咪",
+  "report.qrHint": "用手机扫描二维码打开网站，或在浏览器中输入：",
   "report.disclaimer": "仅供娱乐和日常观察参考。基于单张照片的 AI 观察，关键点为近似定位，结果可能有误，不构成诊断，也不能排除疼痛或疾病。担心猫咪健康请咨询兽医。",
 
   "band.unknown": "能评估的项太少，无法给出总分，请换一张能看清正脸的照片",
@@ -172,6 +174,8 @@ const en = {
   "report.suggestions": "Suggestions",
   "report.caveats": "Photo limitations",
   "report.listSep": "; ",
+  "report.qrTitle": "Scan to check your cat",
+  "report.qrHint": "Scan the QR code with your phone, or open this address in a browser:",
   "report.disclaimer": "For fun and everyday observation only. AI observation of a single photo with approximate landmarks; results may be wrong. Not a diagnosis, and it cannot rule out pain or illness. If you are worried about your cat, please see a vet.",
 
   "band.unknown": "Too few items could be scored to give a total. Please try a photo that clearly shows the face.",
