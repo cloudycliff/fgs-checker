@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "fgs-checker",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./public", "binding": "ASSETS" },
+  // 系统提示词以文本模块形式打包进 Worker
+  "rules": [{ "type": "Text", "globs": ["**/*.md"], "fallthrough": true }],
+  // LLM_MODEL：config/providers.json 里的模型名，决定用哪家；LLM_THINKING：default / on / off
+  "vars": {
+    "LLM_MODEL": "qwen3.8-flash",
+    "LLM_THINKING": "off",
+    // 防滥用：全站每天最多调用次数、每个 IP 每天和每 10 分钟的次数（“每天”按北京时间）、算力验证难度（二进制位数，每加 1 计算量翻倍）
+    "DAILY_LIMIT": "300",
+    "IP_LIMIT_DAY": "20",
+    "IP_LIMIT_10MIN": "5",
+    "POW_DIFFICULTY": "17"
+  },
+  // 调用次数计数器（SQLite 版 Durable Object，免费套餐可用）
+  "durable_objects": { "bindings": [{ "name": "GUARD", "class_name": "Guard" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Guard"] }],
+  // 各家 Key（如 QWEN_API_KEY）和 CHALLENGE_SECRET（算力验证签名用的随机串）是密钥：本地放在 .dev.vars，线上用 `wrangler secret put <名称>`
+  "observability": { "enabled": true }
+}

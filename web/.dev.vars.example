@@ -1,0 +1,11 @@
+# 本地开发用的密钥：复制为 web/.dev.vars 后填写（.dev.vars 不提交）。
+# 线上用 `npx wrangler secret put <名称>` 设置同名密钥。
+
+# 当前使用的模型提供方的 Key（见 wrangler.jsonc 的 LLM_MODEL 和 config/providers.json）
+QWEN_API_KEY=
+# 可选：切换到其他提供方时才需要
+# DEEPSEEK_API_KEY=
+# ZHIPU_API_KEY=
+
+# 算力验证签名用的随机串，可用 `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` 生成
+CHALLENGE_SECRET=

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>猫咪疼痛表情小测</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div class="title-row">
+        <h1 data-i18n="page.heading">猫咪疼痛表情小测</h1>
+        <button id="lang" class="lang" type="button" lang="en">English</button>
+      </div>
+      <p class="sub" data-i18n="page.intro"></p>
+    </header>
+
+    <details class="info">
+      <summary data-i18n="fgs.title"></summary>
+      <p data-i18n="fgs.p1"></p>
+      <p data-i18n="fgs.p2"></p>
+      <ul id="fgs-items"></ul>
+      <p data-i18n="fgs.p3"></p>
+      <p data-i18n="fgs.p4"></p>
+    </details>
+
+    <details class="info">
+      <summary data-i18n="tips.title"></summary>
+      <p data-i18n="tips.body"></p>
+    </details>
+
+    <section id="pick" class="card">
+      <label class="picker" for="file">
+        <input id="file" type="file" accept="image/*">
+        <img id="preview" data-i18n-alt="pick.previewAlt" hidden>
+        <span id="pick-text" data-i18n="pick.choose"></span>
+      </label>
+      <button id="analyze" class="btn" data-i18n="btn.analyze" disabled></button>
+      <p id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="report" hidden>
+      <img id="report-img" data-i18n-alt="report.alt">
+      <div class="actions">
+        <a id="download" class="btn" data-i18n="btn.save"></a>
+        <button id="again" class="btn secondary" data-i18n="btn.again"></button>
+      </div>
+      <p class="hint" data-i18n="report.hint"></p>
+    </section>
+
+    <footer data-i18n="footer"></footer>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# 密钥
+.env
+web/.dev.vars
+
+# 测试照片（授权仅限本地测试）、测试输出、参考图
+test_photos/
+outputs/
+ref/
+
+# 依赖和本地运行缓存
+web/node_modules/
+web/.wrangler/
+__pycache__/
+*.log
